@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Points Challenge</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<div id="score">Points: 0</div>
+
+<div id="overlay" class="overlay"></div>
+<div id="popup" class="popup">
+  <p id="popupText"></p>
+  <button onclick="closePopup()">Continue</button>
+</div>
+
+<div id="welcome" class="screen active">
+<h1>💜 Points Challenge</h1>
+<p>Earn as many points as possible. Follow what feels right...</p>
+<input id="name" placeholder="Enter name">
+<br>
+<button class="primary" onclick="startGame()">Start</button>
+</div>
+
+<div id="game" class="screen">
+<div class="card">
+<h2 id="taskText"></h2>
+<div id="options"></div>
+<p id="timer"></p>
+</div>
+</div>
+
+<div id="end" class="screen">
+<h2>Final Score</h2>
+<p id="finalScore"></p>
+<button onclick="restart()">Play Again</button>
+
+<h3>Debrief</h3>
+<p>This game used manipulation techniques:</p>
+<ul>
+<li>⏱ Urgency (timers)</li>
+<li>🤖 "AI recommendations"</li>
+<li>🎯 Misdirection</li>
+</ul>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
