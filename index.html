@@ -4,42 +4,24 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Mind Trick Game</title>
-<link rel="stylesheet" href="style1.css" />
+<link rel="stylesheet" href="Sleek.css" />
 </head>
 <body>
 
-<!-- WELCOME -->
 <div id="welcome-screen" class="screen active">
     <h1 class="title">🎮 Mind Trick Challenge</h1>
-    <p>Enter your nickname:</p>
-    <input type="text" id="nickname" placeholder="Player123">
+    <p class="subtitle">Trust nothing 😈</p>
     <button id="start-btn">Start Game</button>
 </div>
 
-<!-- GAME -->
-<div id="main-content" class="scroll-container"></div>
+<div id="main-content" class="scroll-container" style="display:none;"></div>
 
-<!-- SCORE -->
 <div id="score-screen" class="screen">
     <h2>Your Score:</h2>
     <h1 id="final-points">0</h1>
-    <p id="comparison-text"></p>
     <button id="restart-btn">Play Again</button>
 </div>
 
-<!-- DEBRIEF -->
-<div id="debrief-screen" class="screen">
-    <h2>What Just Happened?</h2>
-    <p>
-        You were influenced by:
-        <br>⏱️ Urgency (timers & pressure)
-        <br>🤖 Fake AI recommendations
-        <br>👥 Social proof (“top players chose this”)
-        <br>⚠️ Misleading button design
-    </p>
-    <button onclick="location.reload()">Replay</button>
-</div>
-
-<script src="script.js"></script>
+<script src="sleek.js"></script>
 </body>
 </html>
