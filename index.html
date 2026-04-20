@@ -1,27 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Mind Trick Game</title>
-<link rel="stylesheet" href="Sleek.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mind Trick Challenge</title>
+  <link rel="stylesheet" href="Sleek.css" />
 </head>
 <body>
 
-<div id="welcome-screen" class="screen active">
-    <h1 class="title">🎮 Mind Trick Challenge</h1>
-    <p class="subtitle">Trust nothing 😈</p>
-    <button id="start-btn">Start Game</button>
-</div>
+  <!-- welcome screen -->
+  <div id="welcome-screen" class="screen active">
+    <div class="card intro-card">
+      <h1 class="title">🎮 Mind Trick Challenge</h1>
+      <p class="subtitle">Trust nothing 😈</p>
 
-<div id="main-content" class="scroll-container" style="display:none;"></div>
+      <label for="player-name" class="name-label">Enter player name</label>
+      <input type="text" id="player-name" placeholder="Type your name here" maxlength="20" />
 
-<div id="score-screen" class="screen">
-    <h2>Your Score:</h2>
-    <h1 id="final-points">0</h1>
-    <button id="restart-btn">Play Again</button>
-</div>
+      <button id="start-btn">Start Game</button>
+      <p id="start-warning" class="warning-text"></p>
+    </div>
+  </div>
 
-<script src="sleek.js"></script>
+  <!-- game screen -->
+  <div id="game-screen" class="screen">
+    <div class="top-bar">
+      <div class="player-box">Player: <span id="player-display">Guest</span></div>
+      <div class="score-box">Score: <span id="live-score">0</span></div>
+    </div>
+
+    <div id="main-content" class="game-area"></div>
+  </div>
+
+  <!-- score screen -->
+  <div id="score-screen" class="screen">
+    <div class="card result-card">
+      <h2>Game Over</h2>
+      <p class="result-name"><span id="result-player-name">Player</span>, your final score is:</p>
+      <h1 id="final-points">0</h1>
+      <p id="score-message" class="score-message"></p>
+      <button id="restart-btn">Play Again</button>
+    </div>
+  </div>
+
+  <script src="sleek.js"></script>
 </body>
 </html>
