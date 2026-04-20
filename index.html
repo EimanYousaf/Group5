@@ -8,36 +8,54 @@
 </head>
 <body>
 
-  <!-- welcome screen -->
+  <!-- welcome -->
   <div id="welcome-screen" class="screen">
     <div class="card intro-card">
-      <h1 class="title">🎮 Mind Trick Challenge</h1>
-      <p class="subtitle">trust nothing 😈</p>
+      <div class="eyebrow">interactive deception game</div>
+      <h1 class="title">Mind Trick Challenge</h1>
+      <p class="subtitle">
+        every screen is built to confuse you.<br>
+        read carefully. trust nothing.
+      </p>
 
       <label for="player-name" class="name-label">enter player name</label>
       <input type="text" id="player-name" placeholder="type your name here" maxlength="20" />
 
-      <button id="start-btn">Start Game</button>
+      <button id="start-btn">Start Challenge</button>
       <p id="start-warning" class="warning-text"></p>
     </div>
   </div>
 
-  <!-- game screen -->
+  <!-- game -->
   <div id="game-screen" class="screen hidden">
-    <div class="top-bar">
-      <div class="player-box">Player: <span id="player-display">Guest</span></div>
-      <div class="score-box">Score: <span id="live-score">0</span></div>
-      <div class="question-box">Question: <span id="question-count">1</span></div>
+    <div class="hud">
+      <div class="hud-box">
+        <span class="hud-label">player</span>
+        <span id="player-display">Guest</span>
+      </div>
+
+      <div class="hud-box">
+        <span class="hud-label">score</span>
+        <span id="live-score">0</span>
+      </div>
+
+      <div class="hud-box">
+        <span class="hud-label">question</span>
+        <span id="question-count">1 / 10</span>
+      </div>
     </div>
 
     <div id="main-content" class="game-area"></div>
   </div>
 
-  <!-- score screen -->
+  <!-- result -->
   <div id="score-screen" class="screen hidden">
     <div class="card result-card">
-      <h2>Game Over</h2>
-      <p class="result-name"><span id="result-player-name">Player</span>, your final score is:</p>
+      <div class="eyebrow">challenge complete</div>
+      <h2 class="result-title">Well played... maybe.</h2>
+      <p class="result-name">
+        <span id="result-player-name">Player</span>, your final score is
+      </p>
       <h1 id="final-points">0</h1>
       <p id="score-message" class="score-message"></p>
       <button id="restart-btn">Play Again</button>
