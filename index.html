@@ -3,62 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mind Trick Challenge</title>
+  <title>MIND TRICK CHALLENGE</title>
   <link rel="stylesheet" href="Sleek.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- welcome -->
   <div id="welcome-screen" class="screen">
-    <div class="card intro-card">
-      <div class="eyebrow">interactive deception game</div>
-      <h1 class="title">Mind Trick Challenge</h1>
+    <div class="panel intro-panel">
+      <p class="eyebrow">MIND GAME INTERFACE</p>
+      <h1 class="title">MIND TRICK CHALLENGE</h1>
       <p class="subtitle">
-        every screen is built to confuse you.<br>
-        read carefully. trust nothing.
+        EVERY QUESTION IS DESIGNED TO MISLEAD YOU. READ CAREFULLY. TRUST NOTHING.
       </p>
 
-      <label for="player-name" class="name-label">enter player name</label>
-      <input type="text" id="player-name" placeholder="type your name here" maxlength="20" />
+      <label for="player-name" class="input-label">ENTER PLAYER NAME</label>
+      <input type="text" id="player-name" placeholder="TYPE YOUR NAME HERE" maxlength="20" />
 
-      <button id="start-btn">Start Challenge</button>
+      <button id="start-btn">START CHALLENGE</button>
       <p id="start-warning" class="warning-text"></p>
     </div>
   </div>
 
-  <!-- game -->
   <div id="game-screen" class="screen hidden">
     <div class="hud">
-      <div class="hud-box">
-        <span class="hud-label">player</span>
-        <span id="player-display">Guest</span>
-      </div>
-
-      <div class="hud-box">
-        <span class="hud-label">score</span>
-        <span id="live-score">0</span>
-      </div>
-
-      <div class="hud-box">
-        <span class="hud-label">question</span>
-        <span id="question-count">1 / 10</span>
-      </div>
+      <div class="hud-box">PLAYER: <span id="player-display">GUEST</span></div>
+      <div class="hud-box">SCORE: <span id="live-score">0</span></div>
+      <div class="hud-box">QUESTION: <span id="question-count">1 / 10</span></div>
     </div>
 
-    <div id="main-content" class="game-area"></div>
+    <div id="main-content" class="main-content"></div>
   </div>
 
-  <!-- result -->
   <div id="score-screen" class="screen hidden">
-    <div class="card result-card">
-      <div class="eyebrow">challenge complete</div>
-      <h2 class="result-title">Well played... maybe.</h2>
-      <p class="result-name">
-        <span id="result-player-name">Player</span>, your final score is
-      </p>
+    <div class="panel score-panel">
+      <p class="eyebrow">CHALLENGE COMPLETE</p>
+      <h2 class="score-title">FINAL RESULT</h2>
+      <p class="score-name"><span id="result-player-name">PLAYER</span>, YOUR FINAL SCORE IS</p>
       <h1 id="final-points">0</h1>
       <p id="score-message" class="score-message"></p>
-      <button id="restart-btn">Play Again</button>
+      <button id="restart-btn">PLAY AGAIN</button>
     </div>
   </div>
 
