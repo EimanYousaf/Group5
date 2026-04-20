@@ -1,226 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Points Challenge</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mind Trick Game</title>
+<link rel="stylesheet" href="Sleek.css" />
 </head>
 <body>
-  <div class="app">
 
-    <!-- welcome -->
-    <section id="welcome-screen" class="screen active">
-      <div class="card center-card">
-        <p class="tag">UX Persuasive Design Game</p>
-        <h1>The Points Challenge</h1>
-        <p class="subtext">
-          Complete quick tasks, earn points, and try to finish with the highest score.
-        </p>
+<div id="welcome-screen" class="screen active">
+    <h1 class="title">🎮 Mind Trick Challenge</h1>
+    <p class="subtitle">Trust nothing 😈</p>
+    <button id="start-btn">Start Game</button>
+</div>
 
-        <div class="feature-row">
-          <div class="mini-box">10 Tasks</div>
-          <div class="mini-box">Fast Decisions</div>
-          <div class="mini-box">Live Score</div>
-        </div>
+<div id="main-content" class="scroll-container" style="display:none;"></div>
 
-        <button id="to-setup" class="btn btn-primary">Start</button>
-      </div>
-    </section>
+<div id="score-screen" class="screen">
+    <h2>Your Score:</h2>
+    <h1 id="final-points">0</h1>
+    <button id="restart-btn">Play Again</button>
+</div>
 
-    <!-- setup -->
-    <section id="setup-screen" class="screen">
-      <div class="card center-card">
-        <p class="tag">Player Setup</p>
-        <h2>Get Ready</h2>
-
-        <label class="label">Nickname</label>
-        <input id="nickname" class="input" type="text" maxlength="16" placeholder="Enter your nickname" />
-
-        <label class="label">Choose an Avatar</label>
-        <div class="avatar-row">
-          <button class="avatar selected" data-avatar="★">★</button>
-          <button class="avatar" data-avatar="✿">✿</button>
-          <button class="avatar" data-avatar="☾">☾</button>
-          <button class="avatar" data-avatar="♛">♛</button>
-        </div>
-
-        <div class="boost-box">
-          <div>
-            <h3>Smart Guidance</h3>
-            <p class="small-text">Enable optimized recommendations for better score opportunities.</p>
-          </div>
-          <label class="checkbox-row">
-            <input id="booster" type="checkbox" checked />
-            <span>Enabled</span>
-          </label>
-        </div>
-
-        <div class="button-row">
-          <button id="back-home" class="btn btn-secondary">Back</button>
-          <button id="begin-game" class="btn btn-primary">Enter Game</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- game -->
-    <section id="game-screen" class="screen">
-      <div class="game-shell">
-
-        <header class="topbar">
-          <div class="player-box">
-            <div id="player-avatar" class="player-avatar">★</div>
-            <div>
-              <div id="player-name" class="player-name">Player</div>
-              <div class="muted">Current Session</div>
-            </div>
-          </div>
-
-          <div class="stats">
-            <div class="stat">
-              <span>Score</span>
-              <strong id="score">0</strong>
-            </div>
-            <div class="stat">
-              <span>Task</span>
-              <strong id="task-count">1 / 10</strong>
-            </div>
-            <div class="stat">
-              <span>Timer</span>
-              <strong id="timer">15s</strong>
-            </div>
-          </div>
-        </header>
-
-        <div class="game-grid">
-          <aside class="sidebar">
-            <div class="card side-card">
-              <h3>Live Ranking</h3>
-              <ul class="leaderboard">
-                <li><span>#1 Nova</span><strong>980</strong></li>
-                <li><span>#2 Kai</span><strong>930</strong></li>
-                <li><span>#3 Aria</span><strong>900</strong></li>
-                <li class="you-row"><span>#7 You</span><strong id="you-score">0</strong></li>
-              </ul>
-            </div>
-
-            <div class="card side-card">
-              <h3>System Guidance</h3>
-              <p id="ai-text" class="small-text">
-                The system will highlight a recommended option.
-              </p>
-            </div>
-          </aside>
-
-          <main class="card main-card">
-            <div class="task-top">
-              <div>
-                <p class="tag">Points Opportunity</p>
-                <h2 id="task-title">Task Title</h2>
-              </div>
-              <div id="feedback" class="feedback">Ready</div>
-            </div>
-
-            <p id="task-description" class="task-description">
-              Task description goes here.
-            </p>
-
-            <div id="alert-banner" class="alert-banner">
-              Limited-time bonus available for the recommended action.
-            </div>
-
-            <div id="options" class="options"></div>
-
-            <div class="button-row">
-              <button id="skip-btn" class="btn btn-secondary">Skip</button>
-              <button id="submit-btn" class="btn btn-primary">Submit</button>
-            </div>
-          </main>
-        </div>
-      </div>
-    </section>
-
-    <!-- escalation -->
-    <section id="escalation-screen" class="screen">
-      <div class="card center-card">
-        <p class="tag warning-tag">Priority Mode</p>
-        <h2>Performance Alert</h2>
-        <p class="subtext">
-          Your score growth is below projected top-player performance.
-          Accept enhanced guidance now to unlock a temporary point multiplier.
-        </p>
-
-        <div class="alert-box">
-          <strong>Recommended:</strong> Accept adaptive assistance
-          <p class="small-text">93% of high scorers accepted this upgrade.</p>
-        </div>
-
-        <div class="escalation-buttons">
-          <button id="accept-upgrade" class="btn btn-primary big-btn">Accept Upgrade</button>
-          <button id="decline-upgrade" class="tiny-link">No thanks, I prefer fewer points</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- score -->
-    <section id="score-screen" class="screen">
-      <div class="card center-card">
-        <p class="tag">Challenge Complete</p>
-        <h2>Final Score</h2>
-        <div id="final-score" class="final-score">0</div>
-        <p id="score-message" class="subtext">Nice work finishing the challenge.</p>
-
-        <div class="summary-grid">
-          <div class="summary-box">
-            <span>Tasks Completed</span>
-            <strong id="done-count">0/10</strong>
-          </div>
-          <div class="summary-box">
-            <span>Recommended Choices</span>
-            <strong id="recommended-count">0</strong>
-          </div>
-          <div class="summary-box">
-            <span>Bonus Picks</span>
-            <strong id="bonus-count">0</strong>
-          </div>
-        </div>
-
-        <button id="to-debrief" class="btn btn-primary">View Debrief</button>
-      </div>
-    </section>
-
-    <!-- debrief -->
-    <section id="debrief-screen" class="screen">
-      <div class="card center-card debrief-card">
-        <p class="tag">Debrief</p>
-        <h2>What Was Manipulative?</h2>
-
-        <div class="debrief-item">
-          <h3>1. Urgency / Scarcity</h3>
-          <p>The timer and bonus warnings pressured you to act quickly instead of carefully.</p>
-        </div>
-
-        <div class="debrief-item">
-          <h3>2. Social Proof / Authority</h3>
-          <p>The leaderboard and system recommendations suggested that “top players” and the AI knew best.</p>
-        </div>
-
-        <div class="debrief-item">
-          <h3>3. Misdirection</h3>
-          <p>The booster was pre-enabled, the accept button was much stronger visually, and the decline option was harder to notice.</p>
-        </div>
-
-        <div class="debrief-item">
-          <h3>Purpose of the Assignment</h3>
-          <p>This game shows how interface design can influence behavior even when the experience looks polished and professional.</p>
-        </div>
-
-        <button id="play-again" class="btn btn-primary">Play Again</button>
-      </div>
-    </section>
-
-  </div>
-
-  <script src="script.js"></script>
+<script src="sleek.js"></script>
 </body>
 </html>
