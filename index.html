@@ -9,13 +9,13 @@
 <body>
 
   <!-- welcome screen -->
-  <div id="welcome-screen" class="screen active">
+  <div id="welcome-screen" class="screen">
     <div class="card intro-card">
       <h1 class="title">🎮 Mind Trick Challenge</h1>
-      <p class="subtitle">Trust nothing 😈</p>
+      <p class="subtitle">trust nothing 😈</p>
 
-      <label for="player-name" class="name-label">Enter player name</label>
-      <input type="text" id="player-name" placeholder="Type your name here" maxlength="20" />
+      <label for="player-name" class="name-label">enter player name</label>
+      <input type="text" id="player-name" placeholder="type your name here" maxlength="20" />
 
       <button id="start-btn">Start Game</button>
       <p id="start-warning" class="warning-text"></p>
@@ -23,17 +23,18 @@
   </div>
 
   <!-- game screen -->
-  <div id="game-screen" class="screen">
+  <div id="game-screen" class="screen hidden">
     <div class="top-bar">
       <div class="player-box">Player: <span id="player-display">Guest</span></div>
       <div class="score-box">Score: <span id="live-score">0</span></div>
+      <div class="question-box">Question: <span id="question-count">1</span></div>
     </div>
 
     <div id="main-content" class="game-area"></div>
   </div>
 
   <!-- score screen -->
-  <div id="score-screen" class="screen">
+  <div id="score-screen" class="screen hidden">
     <div class="card result-card">
       <h2>Game Over</h2>
       <p class="result-name"><span id="result-player-name">Player</span>, your final score is:</p>
