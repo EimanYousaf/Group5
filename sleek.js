@@ -3,6 +3,7 @@ let currentQuestionIndex = 0;
 let timer;
 let timeLeft = 7;
 let playerName = "GUEST";
+let gameState = 0; // 0: intermission, 1: active question
 
 const startBtn = document.getElementById("start-btn");
 const restartBtn = document.getElementById("restart-btn");
@@ -170,16 +171,18 @@ function loadQuestion() {
 }
 
 function startTimer(card, feedbackBox, customTime = 7) {
+  gameState = 1;
+
   clearInterval(timer);
   timeLeft = customTime;
 
   const fill = card.querySelector(".timer-fill");
-
   timer = setInterval(function () {
     timeLeft -= 0.1;
     fill.style.width = (timeLeft / customTime) * 100 + "%";
 
     if (timeLeft <= 0) {
+      gameState = 0;
       clearInterval(timer);
       showFeedback(
         feedbackBox,
@@ -263,15 +266,18 @@ function createQuestionCard(q) {
       circle.style.background = c;
 
       circle.onclick = function () {
-        clearInterval(timer);
-        if (c === q.color) {
-          points += 10;
-          updateLiveScore();
-          showFeedback(feedbackBox, true, q.rightText);
-        } else {
-          showFeedback(feedbackBox, false, q.wrongText);
+        if (gameState == 1){
+          clearInterval(timer);
+          gameState = 0;
+          if (c === q.color) {
+            points += 10;
+            updateLiveScore();
+            showFeedback(feedbackBox, true, q.rightText);
+          } else {
+            showFeedback(feedbackBox, false, q.wrongText);
+          }
+          setTimeout(moveNext, 2200);
         }
-        setTimeout(moveNext, 2200);
       };
 
       circleRow.appendChild(circle);
@@ -300,17 +306,19 @@ function createQuestionCard(q) {
       }
 
       btn.onclick = function () {
-        clearInterval(timer);
-        if (opt === q.correct) {
-          points += 10;
-          updateLiveScore();
-          showFeedback(feedbackBox, true, q.rightText);
-        } else {
-          showFeedback(feedbackBox, false, q.wrongText);
+        if (gameState == 1) {
+          clearInterval(timer);
+          gameState = 0;
+          if (opt === q.correct) {
+            points += 10;
+            updateLiveScore();
+            showFeedback(feedbackBox, true, q.rightText);
+          } else {
+            showFeedback(feedbackBox, false, q.wrongText);
+          }
+          setTimeout(moveNext, 2400);
         }
-        setTimeout(moveNext, 2400);
       };
-
       optionGroup.appendChild(btn);
     });
 
@@ -330,6 +338,7 @@ function createQuestionCard(q) {
     function checkDone() {
       if (clicked.size >= q.required) {
         clearInterval(timer);
+        gameState = 0;
         points += 10;
         updateLiveScore();
         showFeedback(feedbackBox, true, q.rightText);
@@ -342,10 +351,12 @@ function createQuestionCard(q) {
       sq.className = "square";
 
       sq.onclick = function (e) {
-        e.stopPropagation();
-        clicked.add(i);
-        sq.style.opacity = "0";
-        checkDone();
+        if (gameState ==1){
+          e.stopPropagation();
+          clicked.add(i);
+          sq.style.opacity = "0";
+          checkDone();
+        }
       };
 
       sq.onmouseover = function () {
@@ -356,8 +367,10 @@ function createQuestionCard(q) {
     }
 
     card.onclick = function () {
-      clicked.add("background");
-      checkDone();
+      if (gameState == 1){
+        clicked.add("background");
+        checkDone();
+      }
     };
 
     card.appendChild(squareRow);
@@ -378,15 +391,18 @@ function createQuestionCard(q) {
       btn.textContent = opt;
 
       btn.onclick = function () {
-        clearInterval(timer);
-        if (opt === q.correct) {
-          points += 10;
-          updateLiveScore();
-          showFeedback(feedbackBox, true, q.rightText);
-        } else {
-          showFeedback(feedbackBox, false, q.wrongText);
+        if (gameState == 1){
+          clearInterval(timer);
+          gameState = 0;
+          if (opt === q.correct) {
+            points += 10;
+            updateLiveScore();
+            showFeedback(feedbackBox, true, q.rightText);
+          } else {
+            showFeedback(feedbackBox, false, q.wrongText);
+          }
+          setTimeout(moveNext, 2400);
         }
-        setTimeout(moveNext, 2400);
       };
 
       optionGroup.appendChild(btn);
@@ -414,9 +430,12 @@ function createQuestionCard(q) {
     btn.textContent = "CONTINUE";
 
     btn.onclick = function () {
-      clearInterval(timer);
-      showFeedback(feedbackBox, true, q.rightText);
-      setTimeout(moveNext, 1800);
+      if (gameState == 1){
+        clearInterval(timer);
+        gameState = 0;
+        showFeedback(feedbackBox, true, q.rightText);
+        setTimeout(moveNext, 1800);
+      }
     };
 
     optionGroup.appendChild(btn);
@@ -443,15 +462,18 @@ function createQuestionCard(q) {
       btn.textContent = opt;
 
       btn.onclick = function () {
-        clearInterval(timer);
-        if (opt === q.correct) {
-          points += 10;
-          updateLiveScore();
-          showFeedback(feedbackBox, true, q.rightText);
-        } else {
-          showFeedback(feedbackBox, false, q.wrongText);
+        if (gameState == 1){
+          clearInterval(timer);
+          gameState = 0;
+          if (opt === q.correct) {
+            points += 10;
+            updateLiveScore();
+            showFeedback(feedbackBox, true, q.rightText);
+          } else {
+            showFeedback(feedbackBox, false, q.wrongText);
+          }
+          setTimeout(moveNext, 2400);
         }
-        setTimeout(moveNext, 2400);
       };
 
       optionGroup.appendChild(btn);
