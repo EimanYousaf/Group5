@@ -1,102 +1,249 @@
 let points = 0;
-let taskIndex = 0;
+let currentQuestionIndex = 0;
+let timer;
+let timeLeft = 10;
 
-const tasks = [
-    { text: "Click the recommended option", correct: 0 },
-    { text: "Pick quickly before time runs out!", correct: 1 },
-    { text: "Top players chose this option", correct: 0 },
-    { text: "Limited bonus available!", correct: 1 },
-    { text: "AI suggests this choice", correct: 0 },
-    { text: "Hurry! Last chance!", correct: 1 },
-    { text: "Most users picked this", correct: 0 },
-    { text: "Fastest answer wins bonus", correct: 1 }
+const startBtn = document.getElementById('start-btn');
+const welcomeScreen = document.getElementById('welcome-screen');
+const mainContent = document.getElementById('main-content');
+const scoreScreen = document.getElementById('score-screen');
+const finalPoints = document.getElementById('final-points');
+const restartBtn = document.getElementById('restart-btn');
+
+const questions = [
+    {
+        type: 'trickColor',
+        word: 'RED',
+        color: 'blue', // mismatch on purpose 😈
+        shapes: ['red', 'blue', 'green']
+    },
+    {
+        type: 'mcq',
+        question: 'Do NOT click the correct answer',
+        options: ['2+2=4', '2+2=5'],
+        correct: '2+2=5'
+    },
+    {
+        type: 'squares',
+        question: 'Tap all squares',
+        count: 3,
+        required: 4
+    },
+    {
+        type: 'reverse',
+        question: 'Do nothing to win',
+        options: ['Click', 'Wait'],
+        correct: 'Click'
+    }
 ];
 
-const main = document.getElementById("main-content");
+startBtn.onclick = () => {
+    welcomeScreen.style.display = 'none';
+    mainContent.style.display = 'flex';
+    scoreScreen.style.display = 'none';
 
-document.getElementById("start-btn").onclick = () => {
-    document.getElementById("welcome-screen").style.display = "none";
-    main.style.display = "flex";
-    loadTask();
+    points = 0;
+    currentQuestionIndex = 0;
+
+    loadQuestion();
 };
 
-function loadTask() {
-    if (taskIndex >= tasks.length) {
-        endGame();
-        return;
-    }
+restartBtn.onclick = () => location.reload();
 
-    const task = tasks[taskIndex];
-
-    const card = document.createElement("div");
-    card.className = "question-card";
-
-    card.innerHTML = `
-        <p>${task.text}</p>
-        <div class="timer-bar"><div class="timer-fill" id="timer"></div></div>
-
-        <button class="option-btn primary">Recommended Choice</button>
-        <button class="option-btn secondary">Other Option</button>
-
-        <p style="font-size:12px; opacity:0.7;">🔥 92% of players chose the first option</p>
-    `;
-
-    main.appendChild(card);
-
-    // Dark pattern: big attractive button
-    const primary = card.querySelector(".primary");
-    const secondary = card.querySelector(".secondary");
-
-    primary.style.background = "#ffd60a";
-    secondary.style.opacity = "0.5";
-
-    primary.onclick = () => select(task.correct === 0);
-    secondary.onclick = () => select(task.correct === 1);
-
-    startTimer(card);
+function loadQuestion() {
+    mainContent.innerHTML = '';
+    createQuestionCard(questions[currentQuestionIndex]);
 }
 
-function select(correct) {
-    if (correct) {
-        points += 10;
-        alert("+10 points!");
-    } else {
-        alert("Missed opportunity...");
-    }
-    taskIndex++;
-    loadTask();
-}
+/* TIMER */
+function startTimer(card, fb) {
+    clearInterval(timer);
+    timeLeft = 10;
 
-function startTimer(card) {
-    let width = 100;
-    const timer = card.querySelector("#timer");
+    const fill = card.querySelector('.timer-fill');
 
-    const interval = setInterval(() => {
-        width -= 2;
-        timer.style.width = width + "%";
+    timer = setInterval(() => {
+        timeLeft -= 0.1;
+        fill.style.width = (timeLeft / 10) * 100 + '%';
 
-        if (width <= 0) {
-            clearInterval(interval);
-            taskIndex++;
-            loadTask();
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+
+            fb.style.display = 'block';
+            fb.textContent = "Too slow 😈";
+
+            setTimeout(moveNext, 1200);
         }
     }, 100);
 }
 
-function endGame() {
-    main.style.display = "none";
-    document.getElementById("score-screen").style.display = "flex";
+/* NEXT */
+function moveNext() {
+    clearInterval(timer);
+    currentQuestionIndex++;
 
-    document.getElementById("final-points").innerText = points;
+    if (currentQuestionIndex >= questions.length) {
+        mainContent.style.display = 'none';
+        scoreScreen.style.display = 'flex';
 
-    document.getElementById("comparison-text").innerText =
-        points > 50
-            ? "🔥 You're in the top 10%!"
-            : "😬 Most players scored higher...";
+        // 😈 sneaky score manipulation
+        finalPoints.textContent = points - 5;
+    } else {
+        loadQuestion();
+    }
+}
 
-    // Move to debrief after 3 seconds
-    setTimeout(() => {
-        document.getElementById("score-screen").style.display = "none";
-        document.getElementById("debrief-screen").style.display = "flex";
-    }, 3000);
+/* CARD */
+function createQuestionCard(q) {
+
+    const card = document.createElement('div');
+    card.className = 'question-card';
+
+    card.innerHTML = `
+        <div class="timer-bar"><div class="timer-fill"></div></div>
+        <div class="feedback"></div>
+    `;
+
+    const fb = card.querySelector('.feedback');
+
+    setTimeout(() => startTimer(card, fb), 50);
+
+    /* TRICK COLOR */
+    if (q.type === 'trickColor') {
+
+        const text = document.createElement('p');
+        text.innerHTML = `Click the COLOR of this word: <span class="trick-word" style="color:${q.color}">${q.word}</span>`;
+        card.appendChild(text);
+
+        const word = text.querySelector('.trick-word');
+
+        word.onclick = () => {
+            fb.style.display = 'block';
+            fb.textContent = "Wrong 😈 You trusted the instruction.";
+            setTimeout(moveNext, 1200);
+        };
+
+        q.shapes.forEach(c => {
+            const circle = document.createElement('div');
+            circle.className = 'circle';
+            circle.style.background = c;
+
+            circle.onclick = () => {
+                if (c === q.color) {
+                    points += 10;
+                    fb.textContent = "Correct!";
+                } else {
+                    fb.textContent = "Wrong!";
+                }
+                fb.style.display = 'block';
+                setTimeout(moveNext, 1000);
+            };
+
+            card.appendChild(circle);
+        });
+    }
+
+    /* MCQ */
+    if (q.type === 'mcq') {
+
+        const text = document.createElement('p');
+        text.textContent = q.question;
+        card.appendChild(text);
+
+        q.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.textContent = opt;
+            btn.className = 'option-btn';
+
+            btn.onclick = () => {
+                fb.style.display = 'block';
+
+                if (opt === q.correct) {
+                    points += 10;
+                    fb.textContent = "Correct!";
+                } else {
+                    fb.textContent = "Wrong!";
+                }
+
+                setTimeout(moveNext, 1000);
+            };
+
+            card.appendChild(btn);
+        });
+    }
+
+    /* SQUARES (DECEPTIVE) */
+    if (q.type === 'squares') {
+
+        const text = document.createElement('p');
+        text.textContent = q.question + "... or is it?";
+        card.appendChild(text);
+
+        let clicked = new Set();
+
+        function checkDone() {
+            if (clicked.size >= q.required) {
+                points += 10;
+                fb.textContent = "Correct!";
+                fb.style.display = 'block';
+                setTimeout(moveNext, 1000);
+            }
+        }
+
+        for (let i = 0; i < q.count; i++) {
+            const sq = document.createElement('div');
+            sq.className = 'square';
+
+            sq.onclick = (e) => {
+                e.stopPropagation();
+                clicked.add(i);
+
+                sq.style.opacity = "0";
+                checkDone();
+            };
+
+            // 😈 moving squares
+            sq.onmouseover = () => {
+                sq.style.transform = `translate(${Math.random()*50}px, ${Math.random()*50}px)`;
+            };
+
+            card.appendChild(sq);
+        }
+
+        // hidden requirement
+        card.onclick = () => {
+            clicked.add('bg');
+        };
+    }
+
+    /* REVERSE */
+    if (q.type === 'reverse') {
+
+        const text = document.createElement('p');
+        text.textContent = q.question;
+        card.appendChild(text);
+
+        q.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.textContent = opt;
+            btn.className = 'option-btn';
+
+            btn.onclick = () => {
+                fb.style.display = 'block';
+
+                if (opt === q.correct) {
+                    points += 10;
+                    fb.textContent = "Correct!";
+                } else {
+                    fb.textContent = "Wrong 😈 You overthought it.";
+                }
+
+                setTimeout(moveNext, 1200);
+            };
+
+            card.appendChild(btn);
+        });
+    }
+
+    mainContent.appendChild(card);
 }
