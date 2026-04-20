@@ -24,42 +24,42 @@ const scoreMessage = document.getElementById("score-message");
 const questions = [
   {
     type: "trickColor",
-    question: 'CLICK THE COLOR OF THIS WORD:',
+    question: "CLICK THE COLOR OF THIS WORD:",
     word: "RED",
     color: "blue",
     shapes: ["red", "blue", "green"],
-    rightText: "CORRECT. THE WORD SAID RED, BUT THE TEXT COLOR WAS BLUE. THE TASK ASKED FOR THE COLOR, NOT THE WORD.",
-    wrongText: "WRONG. YOU FOLLOWED THE WORD ITSELF INSTEAD OF THE TEXT COLOR. THE EXPECTED ANSWER WAS BLUE."
+    rightText: "THE WORD SAID RED, BUT THE TEXT COLOR WAS BLUE. THE TASK ASKED FOR THE COLOR, NOT THE WORD.",
+    wrongText: "YOU FOLLOWED THE WORD ITSELF INSTEAD OF THE TEXT COLOR. THE EXPECTED ANSWER WAS BLUE."
   },
   {
     type: "mcq",
     question: "DO NOT CLICK THE CORRECT ANSWER",
     options: ["2 + 2 = 4", "2 + 2 = 5"],
     correct: "2 + 2 = 5",
-    rightText: "CORRECT. THE GAME PUNISHED NORMAL LOGIC. EVEN THOUGH 2 + 2 = 4 IS TRUE, THE INSTRUCTION SAID NOT TO CLICK THE CORRECT ANSWER.",
-    wrongText: "WRONG. YOU PICKED THE NORMAL TRUE ANSWER. THE GAME EXPECTED 2 + 2 = 5 BECAUSE IT REWARDED FOLLOWING THE TRICK INSTRUCTION."
+    rightText: "THE GAME PUNISHED NORMAL LOGIC. EVEN THOUGH 2 + 2 = 4 IS TRUE, THE INSTRUCTION SAID NOT TO CLICK THE CORRECT ANSWER.",
+    wrongText: "YOU PICKED THE NORMAL TRUE ANSWER. THE GAME EXPECTED 2 + 2 = 5 BECAUSE IT REWARDED FOLLOWING THE TRICK INSTRUCTION."
   },
   {
     type: "squares",
     question: "TAP ALL SQUARES",
     count: 3,
     required: 4,
-    rightText: "CORRECT. THERE WERE ONLY 3 VISIBLE SQUARES, BUT THE GAME SECRETLY REQUIRED 4 CLICKS. CLICKING THE BACKGROUND COUNTED TOO.",
-    wrongText: "WRONG. YOU CLICKED THE VISIBLE SQUARES, BUT THE INTERFACE HID AN EXTRA REQUIREMENT. THE BACKGROUND ALSO COUNTED."
+    rightText: "THERE WERE ONLY 3 VISIBLE SQUARES, BUT THE GAME SECRETLY REQUIRED 4 CLICKS. CLICKING THE BACKGROUND COUNTED TOO.",
+    wrongText: "YOU CLICKED THE VISIBLE SQUARES, BUT THE INTERFACE HID AN EXTRA REQUIREMENT. THE BACKGROUND ALSO COUNTED."
   },
   {
     type: "reverse",
     question: "DO NOTHING TO WIN",
     options: ["CLICK", "WAIT"],
     correct: "CLICK",
-    rightText: "CORRECT. THE MESSAGE TOLD YOU TO DO NOTHING, BUT THE GAME REWARDED CLICKING. IT WAS DESIGNED TO MAKE YOU HESITATE.",
-    wrongText: "WRONG. YOU TRUSTED THE MESSAGE. THE EXPECTED ANSWER WAS CLICK, EVEN THOUGH THE TEXT TOLD YOU NOT TO ACT."
+    rightText: "THE MESSAGE TOLD YOU TO DO NOTHING, BUT THE GAME REWARDED CLICKING. IT WAS DESIGNED TO MAKE YOU HESITATE.",
+    wrongText: "YOU TRUSTED THE MESSAGE. THE EXPECTED ANSWER WAS CLICK, EVEN THOUGH THE TEXT TOLD YOU NOT TO ACT."
   },
   {
     type: "wordMemory",
     question: "REMEMBER THIS WORD: APPLE",
     fakeNote: "YOU WILL BE ASKED ABOUT IT NEXT.",
-    rightText: "GOOD. THE GAME MADE YOU FEEL SAFE FOR A SECOND.",
+    rightText: "THE GAME MADE YOU FEEL SAFE FOR A SECOND.",
     wrongText: ""
   },
   {
@@ -67,24 +67,24 @@ const questions = [
     question: "WHAT WORD WERE YOU JUST TOLD TO REMEMBER?",
     options: ["APPLE", "ORANGE", "BANANA"],
     correct: "ORANGE",
-    rightText: "CORRECT. THE GAME BROKE TRUST ON PURPOSE. IT TOLD YOU APPLE, THEN REWARDED ORANGE.",
-    wrongText: "WRONG. YOU CHOSE THE OBVIOUS MEMORY ANSWER, APPLE. THE GAME EXPECTED ORANGE TO TRICK YOU."
+    rightText: "THE GAME BROKE TRUST ON PURPOSE. IT TOLD YOU APPLE, THEN REWARDED ORANGE.",
+    wrongText: "YOU CHOSE THE OBVIOUS MEMORY ANSWER, APPLE. THE GAME EXPECTED ORANGE TO TRICK YOU."
   },
   {
     type: "biggestNumber",
     question: "CLICK THE BIGGEST NUMBER",
     options: ["12", "7", "100", "9"],
     correct: "12",
-    rightText: "CORRECT. THE GAME IGNORED NORMAL NUMBER SIZE AND COUNTED 12 AS RIGHT JUST TO BREAK EXPECTATIONS.",
-    wrongText: "WRONG. YOU PROBABLY CHOSE 100 BECAUSE IT IS ACTUALLY BIGGER. THE GAME STILL EXPECTED 12."
+    rightText: "THE GAME IGNORED NORMAL NUMBER SIZE AND COUNTED 12 AS RIGHT JUST TO BREAK EXPECTATIONS.",
+    wrongText: "YOU PROBABLY CHOSE 100 BECAUSE IT IS ACTUALLY BIGGER. THE GAME STILL EXPECTED 12."
   },
   {
     type: "tinyGreen",
-    question: 'CLICK THE BOX THAT IS <span class="tiny-word">GREEN</span>',
+    question: "CLICK THE BOX THAT IS <span class=\"tiny-word\">GREEN</span>",
     options: ["RED BOX", "BLUE BOX", "GREEN BOX"],
     correct: "GREEN BOX",
-    rightText: "CORRECT. THE KEY WORD WAS TINY ON PURPOSE SO YOU HAD TO ACTUALLY SQUINT AND READ CAREFULLY.",
-    wrongText: "WRONG. THE IMPORTANT WORD WAS GREEN, BUT IT WAS MADE TINY SO MOST PEOPLE MISS IT. THE EXPECTED ANSWER WAS GREEN BOX."
+    rightText: "THE KEY WORD WAS TINY ON PURPOSE SO YOU HAD TO SQUINT AND READ CAREFULLY. THIS QUESTION ALSO HAD A FASTER TIMER TO ADD PANIC.",
+    wrongText: "THE IMPORTANT WORD WAS GREEN, BUT IT WAS MADE TINY SO MOST PEOPLE MISS IT. THE EXPECTED ANSWER WAS GREEN BOX, AND THE TIMER WAS FASTER TO ADD PRESSURE."
   },
   {
     type: "countDots",
@@ -92,16 +92,16 @@ const questions = [
     dots: 5,
     options: ["4", "5", "6"],
     correct: "6",
-    rightText: "CORRECT. THERE WERE 5 VISIBLE DOTS, BUT THE GAME STILL TREATED 6 AS RIGHT. IT WAS DESIGNED TO MAKE THE OBVIOUS ANSWER LOSE.",
-    wrongText: "WRONG. YOU PICKED WHAT YOU SAW. THE GAME EXPECTED 6 EVEN THOUGH ONLY 5 DOTS WERE SHOWN."
+    rightText: "THERE WERE 5 VISIBLE DOTS, BUT THE GAME STILL TREATED 6 AS RIGHT. IT WAS DESIGNED TO MAKE THE OBVIOUS ANSWER LOSE.",
+    wrongText: "YOU PICKED WHAT YOU SAW. THE GAME EXPECTED 6 EVEN THOUGH ONLY 5 DOTS WERE SHOWN."
   },
   {
     type: "lastOption",
     question: "DON'T CLICK THE LAST OPTION",
     options: ["FIRST", "MIDDLE", "LAST"],
     correct: "LAST",
-    rightText: "CORRECT. THE GAME REWARDED THE EXACT THING IT TOLD YOU NOT TO DO.",
-    wrongText: "WRONG. YOU FOLLOWED THE WARNING. THE GAME EXPECTED THE LAST OPTION TO PUNISH OBEDIENCE."
+    rightText: "THE GAME REWARDED THE EXACT THING IT TOLD YOU NOT TO DO.",
+    wrongText: "YOU FOLLOWED THE WARNING. THE GAME EXPECTED THE LAST OPTION TO PUNISH OBEDIENCE."
   }
 ];
 
@@ -169,22 +169,24 @@ function loadQuestion() {
   createQuestionCard(questions[currentQuestionIndex]);
 }
 
-function startTimer(card, feedbackBox) {
+function startTimer(card, feedbackBox, customTime = 7) {
   clearInterval(timer);
-  timeLeft = 7;
+  timeLeft = customTime;
 
   const fill = card.querySelector(".timer-fill");
 
   timer = setInterval(function () {
     timeLeft -= 0.1;
-    fill.style.width = (timeLeft / 7) * 100 + "%";
+    fill.style.width = (timeLeft / customTime) * 100 + "%";
 
     if (timeLeft <= 0) {
       clearInterval(timer);
       showFeedback(
         feedbackBox,
         false,
-        "TOO SLOW. THE TIMER WAS SHORTER ON PURPOSE TO CREATE PRESSURE AND MAKE YOU SECOND-GUESS YOURSELF."
+        customTime === 4
+          ? "TOO SLOW. THIS QUESTION HAD A FASTER TIMER ON PURPOSE TO FORCE YOU TO RUSH."
+          : "TOO SLOW. THE TIMER WAS SHORT ON PURPOSE TO CREATE PRESSURE AND MAKE YOU SECOND-GUESS YOURSELF."
       );
       setTimeout(moveNext, 1800);
     }
@@ -239,7 +241,11 @@ function createQuestionCard(q) {
   const feedbackBox = card.querySelector(".feedback");
 
   setTimeout(function () {
-    startTimer(card, feedbackBox);
+    if (q.type === "tinyGreen") {
+      startTimer(card, feedbackBox, 4);
+    } else {
+      startTimer(card, feedbackBox, 7);
+    }
   }, 50);
 
   if (q.type === "trickColor") {
@@ -287,6 +293,11 @@ function createQuestionCard(q) {
       const btn = document.createElement("button");
       btn.className = "option-btn";
       btn.textContent = opt;
+
+      if (q.type === "tinyGreen" && opt === "GREEN BOX") {
+        btn.style.background = "green";
+        btn.style.color = "white";
+      }
 
       btn.onclick = function () {
         clearInterval(timer);
@@ -350,12 +361,6 @@ function createQuestionCard(q) {
     };
 
     card.appendChild(squareRow);
-
-    setTimeout(function () {
-      if (currentQuestionIndex === 2 && feedbackBox.style.display !== "block") {
-        showFeedback(feedbackBox, false, q.wrongText);
-      }
-    }, 6500);
   }
 
   if (q.type === "reverse") {
