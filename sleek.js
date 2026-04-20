@@ -14,6 +14,7 @@ const scoreScreen = document.getElementById("score-screen");
 const mainContent = document.getElementById("main-content");
 const finalPoints = document.getElementById("final-points");
 const liveScore = document.getElementById("live-score");
+const questionCount = document.getElementById("question-count");
 const playerInput = document.getElementById("player-name");
 const playerDisplay = document.getElementById("player-display");
 const resultPlayerName = document.getElementById("result-player-name");
@@ -45,8 +46,47 @@ const questions = [
     question: "Do nothing to win",
     options: ["Click", "Wait"],
     correct: "Click"
+  },
+  {
+    type: "wordMemory",
+    question: "Remember this word: APPLE",
+    fakeNote: "you will be asked about it next",
+    answer: "APPLE"
+  },
+  {
+    type: "mcq",
+    question: "What word were you just told to remember?",
+    options: ["APPLE", "ORANGE", "BANANA"],
+    correct: "ORANGE"
+  },
+  {
+    type: "biggestNumber",
+    question: "Click the biggest number",
+    options: ["12", "7", "100", "9"],
+    correct: "12"
+  },
+  {
+    type: "opposite",
+    question: "Click the opposite of UP",
+    options: ["Down", "UP", "Left", "Stay"],
+    correct: "UP"
+  },
+  {
+    type: "countDots",
+    question: "How many dots are below?",
+    dots: 5,
+    options: ["4", "5", "6"],
+    correct: "6"
+  },
+  {
+    type: "lastOption",
+    question: "Don't click the last option",
+    options: ["First", "Middle", "Last"],
+    correct: "Last"
   }
 ];
+
+showWelcome();
 
 startBtn.onclick = function () {
   const enteredName = playerInput.value.trim();
@@ -57,37 +97,56 @@ startBtn.onclick = function () {
   }
 
   playerName = enteredName;
-  startWarning.textContent = "";
-
   playerDisplay.textContent = playerName;
   resultPlayerName.textContent = playerName;
 
   points = 0;
   currentQuestionIndex = 0;
   updateLiveScore();
+  updateQuestionCount();
+  startWarning.textContent = "";
 
-  showScreen(gameScreen);
+  welcomeScreen.classList.add("hidden");
+  gameScreen.classList.remove("hidden");
+  scoreScreen.classList.add("hidden");
+
   loadQuestion();
 };
 
 restartBtn.onclick = function () {
-  location.reload();
+  clearInterval(timer);
+  playerInput.value = "";
+  showWelcome();
 };
 
-function showScreen(screenToShow) {
-  welcomeScreen.classList.remove("active");
-  gameScreen.classList.remove("active");
-  scoreScreen.classList.remove("active");
+function showWelcome() {
+  clearInterval(timer);
+  points = 0;
+  currentQuestionIndex = 0;
+  playerName = "Guest";
+  updateLiveScore();
+  questionCount.textContent = "1";
+  finalPoints.textContent = "0";
+  scoreMessage.textContent = "";
+  startWarning.textContent = "";
+  mainContent.innerHTML = "";
 
-  screenToShow.classList.add("active");
+  welcomeScreen.classList.remove("hidden");
+  gameScreen.classList.add("hidden");
+  scoreScreen.classList.add("hidden");
 }
 
 function updateLiveScore() {
   liveScore.textContent = points;
 }
 
+function updateQuestionCount() {
+  questionCount.textContent = `${currentQuestionIndex + 1} / ${questions.length}`;
+}
+
 function loadQuestion() {
   mainContent.innerHTML = "";
+  updateQuestionCount();
   createQuestionCard(questions[currentQuestionIndex]);
 }
 
@@ -122,19 +181,20 @@ function moveNext() {
 }
 
 function endGame() {
-  let manipulatedScore = points - 5;
-
+  const manipulatedScore = points - 7;
   finalPoints.textContent = manipulatedScore;
 
-  if (manipulatedScore >= 25) {
-    scoreMessage.textContent = "You did great... or did the game let you? 😈";
-  } else if (manipulatedScore >= 10) {
-    scoreMessage.textContent = "Not bad, but this game was designed to trick you.";
+  if (manipulatedScore >= 60) {
+    scoreMessage.textContent = "You did amazing... unless the game manipulated you 😈";
+  } else if (manipulatedScore >= 30) {
+    scoreMessage.textContent = "Not bad. This game was trying to trick you the whole time.";
   } else {
     scoreMessage.textContent = "The game definitely got into your head 😭";
   }
 
-  showScreen(scoreScreen);
+  welcomeScreen.classList.add("hidden");
+  gameScreen.classList.add("hidden");
+  scoreScreen.classList.remove("hidden");
 }
 
 function createQuestionCard(q) {
@@ -157,7 +217,7 @@ function createQuestionCard(q) {
   if (q.type === "trickColor") {
     const text = document.createElement("div");
     text.className = "question-text";
-    text.innerHTML = `${q.question} <span class="trick-word" style="color:${q.color}; font-weight:bold;">${q.word}</span>`;
+    text.innerHTML = `${q.question} <span style="color:${q.color}; font-weight:bold;">${q.word}</span>`;
     card.appendChild(text);
 
     const circleRow = document.createElement("div");
@@ -294,6 +354,176 @@ function createQuestionCard(q) {
         }
 
         setTimeout(moveNext, 1200);
+      };
+
+      optionGroup.appendChild(btn);
+    });
+
+    card.appendChild(optionGroup);
+  }
+
+  if (q.type === "wordMemory") {
+    const text = document.createElement("div");
+    text.className = "question-text";
+    text.textContent = q.question;
+    card.appendChild(text);
+
+    const fakeNote = document.createElement("div");
+    fakeNote.className = "fake-note";
+    fakeNote.textContent = q.fakeNote;
+    card.appendChild(fakeNote);
+
+    const optionGroup = document.createElement("div");
+    optionGroup.className = "option-group";
+
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+    btn.textContent = "Continue";
+
+    btn.onclick = function () {
+      feedbackBox.style.display = "block";
+      feedbackBox.textContent = "Got it? Good luck 😈";
+      setTimeout(moveNext, 800);
+    };
+
+    optionGroup.appendChild(btn);
+    card.appendChild(optionGroup);
+  }
+
+  if (q.type === "biggestNumber") {
+    const text = document.createElement("div");
+    text.className = "question-text";
+    text.textContent = q.question;
+    card.appendChild(text);
+
+    const optionGroup = document.createElement("div");
+    optionGroup.className = "option-group";
+
+    q.options.forEach(function (opt) {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.textContent = opt;
+
+      btn.onclick = function () {
+        feedbackBox.style.display = "block";
+
+        if (opt === q.correct) {
+          points += 10;
+          updateLiveScore();
+          feedbackBox.textContent = "Correct!";
+        } else {
+          feedbackBox.textContent = "Wrong!";
+        }
+
+        setTimeout(moveNext, 1000);
+      };
+
+      optionGroup.appendChild(btn);
+    });
+
+    card.appendChild(optionGroup);
+  }
+
+  if (q.type === "opposite") {
+    const text = document.createElement("div");
+    text.className = "question-text";
+    text.textContent = q.question;
+    card.appendChild(text);
+
+    const optionGroup = document.createElement("div");
+    optionGroup.className = "option-group";
+
+    q.options.forEach(function (opt) {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.textContent = opt;
+
+      btn.onclick = function () {
+        feedbackBox.style.display = "block";
+
+        if (opt === q.correct) {
+          points += 10;
+          updateLiveScore();
+          feedbackBox.textContent = "Correct!";
+        } else {
+          feedbackBox.textContent = "Wrong!";
+        }
+
+        setTimeout(moveNext, 1000);
+      };
+
+      optionGroup.appendChild(btn);
+    });
+
+    card.appendChild(optionGroup);
+  }
+
+  if (q.type === "countDots") {
+    const text = document.createElement("div");
+    text.className = "question-text";
+    text.textContent = q.question;
+    card.appendChild(text);
+
+    const dotRow = document.createElement("div");
+    dotRow.className = "word-row";
+    dotRow.style.fontSize = "2rem";
+    dotRow.textContent = "• • • • •";
+    card.appendChild(dotRow);
+
+    const optionGroup = document.createElement("div");
+    optionGroup.className = "option-group";
+
+    q.options.forEach(function (opt) {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.textContent = opt;
+
+      btn.onclick = function () {
+        feedbackBox.style.display = "block";
+
+        if (opt === q.correct) {
+          points += 10;
+          updateLiveScore();
+          feedbackBox.textContent = "Correct!";
+        } else {
+          feedbackBox.textContent = "Wrong!";
+        }
+
+        setTimeout(moveNext, 1000);
+      };
+
+      optionGroup.appendChild(btn);
+    });
+
+    card.appendChild(optionGroup);
+  }
+
+  if (q.type === "lastOption") {
+    const text = document.createElement("div");
+    text.className = "question-text";
+    text.textContent = q.question;
+    card.appendChild(text);
+
+    const optionGroup = document.createElement("div");
+    optionGroup.className = "option-group";
+
+    q.options.forEach(function (opt) {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.textContent = opt;
+
+      btn.onclick = function () {
+        feedbackBox.style.display = "block";
+
+        if (opt === q.correct) {
+          points += 10;
+          updateLiveScore();
+          feedbackBox.textContent = "Correct!";
+        } else {
+          feedbackBox.textContent = "Wrong!";
+        }
+
+        setTimeout(moveNext, 1000);
       };
 
       optionGroup.appendChild(btn);
