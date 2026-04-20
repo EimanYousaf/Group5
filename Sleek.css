@@ -11,21 +11,21 @@ body {
 }
 
 .screen {
-  display: none;
   min-height: 100vh;
   width: 100%;
-}
-
-.screen.active {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
 }
 
+.hidden {
+  display: none;
+}
+
 .card {
   width: 100%;
-  max-width: 500px;
+  max-width: 520px;
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 22px;
@@ -89,7 +89,6 @@ button:hover {
   font-size: 14px;
 }
 
-/* game screen */
 #game-screen {
   flex-direction: column;
   align-items: center;
@@ -99,15 +98,17 @@ button:hover {
 
 .top-bar {
   width: 100%;
-  max-width: 900px;
+  max-width: 950px;
   display: flex;
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .player-box,
-.score-box {
+.score-box,
+.question-box {
   background: rgba(255, 255, 255, 0.12);
   padding: 12px 16px;
   border-radius: 14px;
@@ -117,7 +118,7 @@ button:hover {
 
 .game-area {
   width: 100%;
-  max-width: 900px;
+  max-width: 950px;
 }
 
 .question-card {
@@ -130,9 +131,10 @@ button:hover {
 }
 
 .question-text {
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   margin-bottom: 20px;
   line-height: 1.5;
+  text-align: center;
 }
 
 .timer-bar {
@@ -173,7 +175,8 @@ button:hover {
 }
 
 .circle-row,
-.square-row {
+.square-row,
+.word-row {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -203,6 +206,20 @@ button:hover {
   transition: 0.2s ease;
 }
 
+.word-choice {
+  background: white;
+  color: #2d0b45;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.word-choice:hover {
+  transform: scale(1.05);
+}
+
 .feedback {
   display: none;
   margin-top: 20px;
@@ -210,6 +227,7 @@ button:hover {
   border-radius: 12px;
   background: rgba(0, 0, 0, 0.28);
   font-weight: bold;
+  text-align: center;
 }
 
 .result-card h2 {
@@ -234,6 +252,12 @@ button:hover {
   margin-bottom: 18px;
 }
 
+.fake-note {
+  font-size: 0.95rem;
+  opacity: 0.75;
+  margin-top: 12px;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -250,11 +274,11 @@ button:hover {
     font-size: 2.1rem;
   }
 
-  .top-bar {
-    flex-direction: column;
-  }
-
   .question-card {
     padding: 20px;
+  }
+
+  .top-bar {
+    flex-direction: column;
   }
 }
