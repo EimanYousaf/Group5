@@ -11,6 +11,7 @@
 </head>
 <body>
 
+  <!-- welcome -->
   <div id="welcome-screen" class="screen">
     <div class="panel intro-panel">
       <p class="eyebrow">MIND GAME INTERFACE</p>
@@ -27,6 +28,7 @@
     </div>
   </div>
 
+  <!-- game -->
   <div id="game-screen" class="screen hidden">
     <div class="hud">
       <div class="hud-box">PLAYER: <span id="player-display">GUEST</span></div>
@@ -37,6 +39,7 @@
     <div id="main-content" class="main-content"></div>
   </div>
 
+  <!-- score -->
   <div id="score-screen" class="screen hidden">
     <div class="panel score-panel">
       <p class="eyebrow">CHALLENGE COMPLETE</p>
@@ -44,7 +47,58 @@
       <p class="score-name"><span id="result-player-name">PLAYER</span>, YOUR FINAL SCORE IS</p>
       <h1 id="final-points">0</h1>
       <p id="score-message" class="score-message"></p>
-      <button id="restart-btn">PLAY AGAIN</button>
+
+      <div class="score-buttons">
+        <button id="debrief-btn">VIEW DEBRIEF</button>
+        <button id="restart-btn">PLAY AGAIN</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- debrief -->
+  <div id="debrief-screen" class="screen hidden">
+    <div class="panel debrief-panel">
+      <p class="eyebrow">DEBRIEF</p>
+      <h2 class="score-title">HOW YOU WERE MANIPULATED</h2>
+
+      <div class="debrief-list">
+        <div class="debrief-item">
+          <h3>1. URGENCY / PRESSURE</h3>
+          <p>
+            COUNTDOWN TIMERS AND THE FASTER GREEN QUESTION PUSHED YOU TO ANSWER QUICKLY
+            INSTEAD OF CAREFULLY.
+          </p>
+        </div>
+
+        <div class="debrief-item">
+          <h3>2. SOCIAL PROOF / AUTHORITY</h3>
+          <p>
+            SOME QUESTIONS USED FAKE MESSAGES LIKE “AI RECOMMENDS THIS” OR “TOP PLAYERS PICKED THIS”
+            TO INFLUENCE YOUR DECISION.
+          </p>
+        </div>
+
+        <div class="debrief-item">
+          <h3>3. MISDIRECTION</h3>
+          <p>
+            THE INTERFACE USED CONTRADICTORY INSTRUCTIONS, HIDDEN RULES, AND TINY TEXT
+            TO MAKE THE OBVIOUS ANSWER FAIL.
+          </p>
+        </div>
+
+        <div class="debrief-item">
+          <h3>4. WHY THIS COUNTS AS A DARK PATTERN</h3>
+          <p>
+            THE GAME WAS BUILT TO SHAPE YOUR CHOICES WITHOUT BEING HONEST UP FRONT.
+            IT REWARDED CONFUSION, RUSHING, AND TRUSTING BAD GUIDANCE.
+          </p>
+        </div>
+      </div>
+
+      <div class="score-buttons">
+        <button id="back-score-btn">BACK TO SCORE</button>
+        <button id="restart-btn-2">PLAY AGAIN</button>
+      </div>
     </div>
   </div>
 
