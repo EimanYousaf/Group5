@@ -29,7 +29,7 @@ body {
 
 .panel {
   width: 100%;
-  max-width: 620px;
+  max-width: 720px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 28px;
@@ -178,7 +178,18 @@ button:hover {
   font-size: 1.3rem;
   line-height: 1.6;
   text-align: center;
-  margin-bottom: 22px;
+  margin-bottom: 12px;
+}
+
+.pattern-note {
+  display: inline-block;
+  margin: 0 auto 18px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  border-radius: 999px;
+  background: rgba(255, 214, 10, 0.12);
+  border: 1px solid rgba(255, 214, 10, 0.28);
+  color: #ffe98b;
 }
 
 .option-group {
@@ -294,6 +305,48 @@ button:hover {
   letter-spacing: 0.18em;
 }
 
+.score-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.debrief-panel {
+  text-align: left;
+}
+
+.debrief-panel .eyebrow,
+.debrief-panel .score-title {
+  text-align: center;
+}
+
+.debrief-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 24px 0;
+}
+
+.debrief-item {
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.debrief-item h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #ffd60a;
+}
+
+.debrief-item p {
+  margin: 0;
+  line-height: 1.7;
+  font-size: 0.92rem;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -310,7 +363,8 @@ button:hover {
     font-size: 2.3rem;
   }
 
-  .question-card {
+  .question-card,
+  .panel {
     padding: 22px;
   }
 
